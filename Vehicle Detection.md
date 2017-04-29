@@ -6,21 +6,10 @@
 The goals / steps of this project are the following:
 
 * Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
-~~Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector.~~
 * Normalize the features and randomize a selection for training and testing.
 * Implement a sliding-window technique and use the trained classifier to search for vehicles in images.
 * Run the pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
 * Estimate a bounding box for vehicles detected.
-
-~~[//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4~~
 
 Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/513/view) individually and describe how I addressed each point in my implementation.
 
@@ -43,8 +32,8 @@ The code for this step is contained in the notebook section "Rubric 2.1 HOG feat
 
 I started by reading in all the `vehicle` and `non-vehicle` images. A function is defined to load either the small or big dataset. In the experiment, I used the small set. Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![car class](./img4reprot/sample_car.png)
-![noncar class](./img4reprot/sample_noncar.png)
+![car class](./img4report/sample_car.png)
+![noncar class](./img4report/sample_noncar.png)
 
 I then explored different color spaces and different `hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `hog()` output looks like.
 
@@ -61,7 +50,7 @@ The code for exploring different HOG parameters is given in notebook section "Ru
 color_space = "RGB"
 orient = 9
 cell_per_block = 2
-pix_per_cell = 16  
+pix_per_cell = 8  
 ```
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
@@ -75,7 +64,7 @@ Besides the HOG features, I also used the color space histogram features in the 
 ```
 color_space = 'RGB' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
 orient = 9  # HOG orientations
-pix_per_cell = 16 # HOG pixels per cell
+pix_per_cell = 8 # HOG pixels per cell
 cell_per_block = 2 # HOG cells per block
 hog_channel = "ALL" # Can be 0, 1, 2, or "ALL"
 spatial_size = (16, 16) # Spatial binning dimensions
@@ -85,9 +74,9 @@ hist_feat = True # Histogram features on or off
 hog_feat = True # HOG features on or off 
 ```
 
-With these parameters set, I extracted car and noncar features, the total feature length is 1020. 
+With these parameters set, I extracted car and noncar features, the total feature length is 5340. 
 
-The I performed the training, the training sample is 1856, and test sample is 465. the test accuracy is 0.9914. The training result is cached for later use.
+The I performed the training, the training sample is 1856, and test sample is 465. the test accuracy is 0.9828. The training result is cached for later use.
 
 ### Sliding Window Search
 
@@ -99,11 +88,11 @@ To limit the search area, and it's also natural to do so, since the cars can not
 ```
 x_start_stop = [800, 1280]
 y_start_stop = [350, 650]
-xy_overlap = (0.9, 0.9)
-xy_window=(128,64)
+xy_overlap = (0.9, 0.7)
+xy_window=(128, 64)
 ```
 
-I chose a very `tight` overlap, with value of 0.9. The value is based on many experiments, with tight values, it gives more space to regulate the threshold value in later stage, but the downside is much more computation. Below is an example image after performing the sliding window search. 
+I chose a very `tight` overlap, with value of (0.9, 0.7). The value is based on many experiments, with tight values, it gives more space to regulate the threshold value in later stage, but the downside is much more computation. Below is an example image after performing the sliding window search. 
 
 ![found cars](./img4report/found_cars.png)
 
@@ -136,9 +125,12 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 **Here are six frames of original images, boxed images, heatmap and cleaned images**
 
-![alt text][image5]
-
-
+![pipeline 1](./img4report/pipe_line_result1.png)
+![pipeline 2](./img4report/pipe_line_result2.png)
+![pipeline 3](./img4report/pipe_line_result3.png)
+![pipeline 4](./img4report/pipe_line_result4.png)
+![pipeline 5](./img4report/pipe_line_result5.png)
+![pipeline 6](./img4report/pipe_line_result6.png)
 
 ---
 
