@@ -125,12 +125,12 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 **Here are six frames of original images, boxed images, heatmap and cleaned images**
 
-![pipeline 1](./img4report/pipe_line_result1.png)
-![pipeline 2](./img4report/pipe_line_result2.png)
-![pipeline 3](./img4report/pipe_line_result3.png)
-![pipeline 4](./img4report/pipe_line_result4.png)
-![pipeline 5](./img4report/pipe_line_result5.png)
-![pipeline 6](./img4report/pipe_line_result6.png)
+1. ![pipeline 1](./img4report/pipe_line_result1.png)
+1. ![pipeline 2](./img4report/pipe_line_result2.png)
+1. ![pipeline 3](./img4report/pipe_line_result3.png)
+1. ![pipeline 4](./img4report/pipe_line_result4.png)
+1. ![pipeline 5](./img4report/pipe_line_result5.png)
+1. ![pipeline 6](./img4report/pipe_line_result6.png)
 
 ---
 
@@ -138,5 +138,9 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+There are several problems:
+1. The fist problem is the extracted features, whether are not they are the best features is fully tested; 
+2. The parameters chose is not necessarily the optimum one, although I tried many different combinations, they are not enough;
+3. In the video stream, some frames are failed in detection caused by the brightness of the image, maybe a HLS color space would do better than the RGB;
+4. The computation time currently is slow. 
 
